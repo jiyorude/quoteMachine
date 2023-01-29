@@ -1,0 +1,14 @@
+#footerbar {
+  background-color: var(--one);
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  width: 100vw;
+  height: 4.2vh;
+  bottom: 0vh;
+  color: #fafafa;
+  text-align: center;
+  align-items: center;
+  font-family: var(--light);
+  font-size: 14px;
+}

@@ -1,5 +1,10 @@
 import "./index.css";
 import { useState } from "react";
+import anime from 'anime-3.2.1';
+
+let colorStorage = {
+  colors: ["#023963", "#035ea3", "#0474cc", "#0583e3", "#116aa6", "#0a4166"],
+};
 
 let quoteStorage = {
   quotes: [
@@ -8,39 +13,39 @@ let quoteStorage = {
       author: "Jordy Veenstra",
     },
     {
-      quote: "You only live once. But if you do it right, once is enough",
+      quote: "You only live once. But if you do it right, once is enough.",
       author: "Mae West",
     },
     {
-      quote: "Everything you can imagine is real",
+      quote: "Everything you can imagine is real.",
       author: "Pablo Picasso",
     },
     {
-      quote: "A day without sunshine is like, you know, night",
+      quote: "A day without sunshine is like, you know, night.",
       author: "Steve Martin",
     },
     {
-      quote: "It's no use going back to yesterday, because I was a different person back then",
+      quote: "It's no use going back to yesterday, because I was a different person back then.",
       author: "Lewis Carroll",
     },
     {
-      quote: "Never memorize anything that you can look up",
+      quote: "Never memorize anything that you can look up.",
       author: "Albert Einstein",
     },
     {
-      quote: "I like work: it fascinates me. I can sit and look at it for hours",
+      quote: "I like work: it fascinates me. I can sit and look at it for hours.",
       author: "Jerome K. Jerome",
     },
     {
-      quote: "If at first you don't succeed, try again. Then quit. No use being a damn fool about it",
+      quote: "If at first you don't succeed, try again. Then quit. No use being a damn fool about it.",
       author: "W.C. Fields",
     },
     {
-      quote: "Happiness is a warm puppy",
+      quote: "Happiness is a warm puppy.",
       author: "Charles M. Schulz",
     },
     {
-      quote: "Time is an illusion. Lunchtime doubly so",
+      quote: "Time is an illusion. Lunchtime doubly so.",
       author: "Douglas Adams",
     },
   ],
@@ -48,6 +53,11 @@ let quoteStorage = {
 
 function QuoteMachine() {
   const [selectedQuote, setSelectedQuote] = useState(quoteStorage.quotes[0]);
+  const [fade, setFade] = useState(false);
+
+  const handleClick = () => {
+    setFade(!fade);
+  };
 
   const handleNewQuote = () => {
     const randomIndex = Math.floor(Math.random() * quoteStorage.quotes.length);
@@ -59,7 +69,13 @@ function QuoteMachine() {
       <section id="quote-box">
         <span id="text">{selectedQuote.quote}</span>
         <span id="author">{selectedQuote.author}</span>
-        <button id="new-quote" onClick={handleNewQuote}>
+        <button
+          id="new-quote"
+          onClick={() => {
+            handleNewQuote();
+            handleClick();
+          }}
+        >
           NEW QUOTE
         </button>
         <a

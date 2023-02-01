@@ -1,9 +1,21 @@
 import "./index.css";
 import { useState } from "react";
-import anime from 'anime-3.2.1';
+import anime from "animejs";
 
 let colorStorage = {
-  colors: ["#023963", "#035ea3", "#0474cc", "#0583e3", "#116aa6", "#0a4166"],
+  colors: [
+    "#023963",
+    "#035ea3",
+    "#0474cc",
+    "#0583e3",
+    "#116aa6",
+    "#0a4166",
+    "#1584cf",
+    "#5eb2f2",
+    "#529ad1",
+    "#34678f",
+    "#4488bd",
+  ],
 };
 
 let quoteStorage = {
@@ -53,10 +65,11 @@ let quoteStorage = {
 
 function QuoteMachine() {
   const [selectedQuote, setSelectedQuote] = useState(quoteStorage.quotes[0]);
-  const [fade, setFade] = useState(false);
+  const [color, setColor] = useState(colorStorage.colors[0]);
 
-  const handleClick = () => {
-    setFade(!fade);
+  const handleColor = () => {
+    const randomColor = Math.floor(Math.random() * colorStorage.colors.length);
+    setColor(colorStorage.colors[randomColor]);
   };
 
   const handleNewQuote = () => {
@@ -64,30 +77,72 @@ function QuoteMachine() {
     setSelectedQuote(quoteStorage.quotes[randomIndex]);
   };
 
+  let fadeFunc = () => {
+    let fade = anime.timeline({
+      easing: "easeOutExpo",
+      duration: 300,
+    });
+
+    fade
+      .add({
+        targets: "#text",
+        opacity: [1, 0],
+      })
+      .add({
+        targets: "#author",
+        opacity: [1, 0],
+      });
+
+      anime.remove("#text #author")
+
+      setTimeout(() => {
+        handleNewQuote();
+        handleColor();
+      }, "1500");
+    
+
+    fade.finished.then(function () {
+      let fadeBack = anime.timeline({
+        easing: "easeOutExpo",
+        duration: 300,
+      });
+
+      fadeBack
+        .add({
+          targets: "#text",
+          opacity: [0, 1],
+        }, 1500)
+        .add({
+          targets: "#author",
+          opacity: [0, 1],
+        });
+    });
+  };
+
   return (
-    <div id="quote-box-flex">
-      <section id="quote-box">
-        <span id="text">{selectedQuote.quote}</span>
-        <span id="author">{selectedQuote.author}</span>
-        <button
-          id="new-quote"
-          onClick={() => {
-            handleNewQuote();
-            handleClick();
-          }}
-        >
-          NEW QUOTE
-        </button>
-        <a
-          id="tweet-quote"
-          title="Share this quote on Twitter!"
-          target="_blank"
-          rel="noreferrer"
-          href="https://twitter.com/intent/tweet"
-        >
-          <button id="tweetbtn">TWEET QUOTE</button>
-        </a>
-      </section>
+    <div className="compBody" style={{ backgroundColor: color }}>
+      <div id="quote-box-flex">
+        <section id="quote-box">
+          <span id="text" style={{ color: color }}>
+            {selectedQuote.quote}
+          </span>
+          <span id="author" style={{ color: color }}>
+            {selectedQuote.author}
+          </span>
+          <button id="new-quote" onClick={fadeFunc}>
+            NEW QUOTE
+          </button>
+          <a
+            id="tweet-quote"
+            title="Share this quote on Twitter!"
+            target="_blank"
+            rel="noreferrer"
+            href="https://twitter.com/intent/tweet"
+          >
+            <button id="tweetbtn">TWEET QUOTE</button>
+          </a>
+        </section>
+      </div>
     </div>
   );
 }

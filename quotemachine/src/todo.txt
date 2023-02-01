@@ -1,6 +1,0 @@
-- Quotes -  Style the quotes and make it go to two sentences with wrapping. Set quote author to flex-end
-- Button designs
-- Add more quotes, add more shades of blue 
-- Add a few simple animations with animejs
-- Use the idea of useState for changing the colors!
-

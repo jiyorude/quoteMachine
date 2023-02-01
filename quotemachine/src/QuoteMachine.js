@@ -93,13 +93,12 @@ function QuoteMachine() {
         opacity: [1, 0],
       });
 
-      anime.remove("#text #author")
+    anime.remove("#text #author");
 
-      setTimeout(() => {
-        handleNewQuote();
-        handleColor();
-      }, "1500");
-    
+    setTimeout(() => {
+      handleNewQuote();
+      handleColor();
+    }, "1500");
 
     fade.finished.then(function () {
       let fadeBack = anime.timeline({
@@ -108,10 +107,13 @@ function QuoteMachine() {
       });
 
       fadeBack
-        .add({
-          targets: "#text",
-          opacity: [0, 1],
-        }, 1500)
+        .add(
+          {
+            targets: "#text",
+            opacity: [0, 1],
+          },
+          1500
+        )
         .add({
           targets: "#author",
           opacity: [0, 1],
